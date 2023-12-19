@@ -12,22 +12,24 @@ repositories {
 dependencies {
   implementation gradleApi()
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  implementation "org.jgrapht:jgrapht-core:1.5.2"
+  implementation 'com.jakewharton.picnic:picnic:0.7.0'
 
   testImplementation 'junit:junit:4.13.2'
 }
 
 compileKotlin {
   kotlinOptions {
-    jvmTarget = "11"
+    jvmTarget = "17"
   }
 }
 compileTestKotlin {
   kotlinOptions {
-    jvmTarget = "11"
+    jvmTarget = "17"
   }
 }
 
-group = 'com.jraska.module.graph.assertion'
+group = 'com.jraska.fork.module.graph.assertion'
 
 gradlePlugin {
   website = 'https://github.com/jraska/modules-graph-assert'
@@ -35,8 +37,8 @@ gradlePlugin {
 
   plugins {
     modulesGraphAssert {
-      id = 'com.jraska.module.graph.assertion'
-      version = '2.5.0'
+      id = 'com.jraska.fork.module.graph.assertion'
+      version = '2.5.1'
       displayName = 'Modules Graph Assert'
       description = 'Gradle plugin to keep your modules graph healthy and lean.'
       implementationClass = 'com.jraska.module.graph.assertion.ModuleGraphAssertionsPlugin'

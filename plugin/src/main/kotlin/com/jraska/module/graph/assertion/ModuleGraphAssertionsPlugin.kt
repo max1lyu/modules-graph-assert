@@ -3,6 +3,7 @@ package com.jraska.module.graph.assertion
 import com.jraska.module.graph.DependencyGraph
 import com.jraska.module.graph.assertion.Api.Tasks
 import com.jraska.module.graph.assertion.tasks.AssertGraphTask
+import com.jraska.module.graph.assertion.tasks.GenerateModulesGraphNodeStatisticsTask
 import com.jraska.module.graph.assertion.tasks.GenerateModulesGraphStatisticsTask
 import com.jraska.module.graph.assertion.tasks.GenerateModulesGraphTask
 import org.gradle.api.Plugin
@@ -46,6 +47,7 @@ class ModuleGraphAssertionsPlugin : Plugin<Project> {
 
     project.addModuleGraphGeneration()
     project.addModuleGraphStatisticsGeneration()
+    project.addModuleNodeStatisticsGeneration()
 
     val allAssertionsTask = project.tasks.register(Tasks.ASSERT_ALL) { it.group = VERIFICATION_GROUP }
 
@@ -149,6 +151,15 @@ class ModuleGraphAssertionsPlugin : Plugin<Project> {
 
   private fun onlyAllowedAssert(graphRules: GraphRulesExtension) =
     OnlyAllowedAssert(graphRules.allowed, aliases)
+
+  private fun Project.addModuleNodeStatisticsGeneration() {
+    tasks.register(
+      Tasks.GENERATE_NODE_STATISTICS,
+      GenerateModulesGraphNodeStatisticsTask::class.java
+    ) {
+      it.dependencyGraph = moduleGraph
+    }
+  }
 }
 
 private fun Project.moduleNameForHeightAssert(): String? {
